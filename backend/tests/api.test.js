@@ -11,7 +11,7 @@ jest.mock("../src/db", () => ({
 
 const app = createApp();
 
-describe("Mercado Vecino API Hito 3", () => {
+describe("Mercado Vecino API Hito 4", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

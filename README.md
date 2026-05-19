@@ -1,8 +1,8 @@
-# Mercado Vecino - Hito 3 Desarrollo Backend
+# Mercado Vecino - Hito 4 Integracion y despliegue
 
-Marketplace local desarrollado como entrega del Hito 3 de Desafio Latam. El foco principal de esta version es el backend: API REST con Express, PostgreSQL mediante `pg`, autenticacion JWT, middlewares, CORS y pruebas automatizadas con Supertest.
+Marketplace local desarrollado como entrega del Hito 4 de Desafio Latam. Esta version toma la base del Hito 3 y la prepara para produccion: frontend desplegable en Netlify, backend desplegable en Render, base de datos PostgreSQL cloud e integracion mediante variables de entorno.
 
-El frontend React del Hito 2 se mantiene como continuidad visual del proyecto, pero la evaluacion de este hito se concentra en la API y su conexion con base de datos. En esta version el frontend complementario ya puede consumir el backend real cuando esta disponible.
+La entrega del hito corresponde al link publico de la aplicacion cliente. El frontend debe apuntar al backend productivo con `VITE_API_URL`, y el backend debe conectarse a la base de datos productiva con `DATABASE_URL`.
 
 ## Tecnologias principales
 
@@ -17,10 +17,21 @@ El frontend React del Hito 2 se mantiene como continuidad visual del proyecto, p
 - Multer para subida de imagenes
 - Supertest y Jest para tests
 - React, Vite, React Router y AnimeJS como frontend de continuidad
+- Netlify para deploy del cliente
+- Render para deploy de backend y PostgreSQL
+
+## Checklist Hito 4
+
+| Criterio | Evidencia en el proyecto |
+|---|---|
+| Deploy aplicacion cliente | `netlify.toml`, build Vite y variable `VITE_API_URL`. |
+| Deploy aplicacion backend | `render.yaml`, `backend/package.json` y health check `/api/health`. |
+| Deploy base de datos | `database/schema.sql`, `database/seed.sql` y PostgreSQL declarado en `render.yaml`. |
+| Integracion cliente-backend en produccion | `frontend/src/services/api.js`, CORS configurable con `CORS_ORIGIN` y variables de entorno documentadas. |
 
 ## Mejoras aplicadas desde el feedback del Hito 2
 
-El feedback del Hito 2 recomendaba preparar el proyecto para una integracion completa con backend real, mejorar modularizacion y contemplar rutas no existentes. En el Hito 3 se aplicaron estas mejoras:
+El feedback del Hito 2 recomendaba preparar el proyecto para una integracion completa con backend real, mejorar modularizacion y contemplar rutas no existentes. En los hitos 3 y 4 se aplicaron estas mejoras:
 
 - Los datos principales pasan a persistirse en PostgreSQL mediante una API REST.
 - El frontend complementario consume categorias y publicaciones desde `http://localhost:3000/api`.
@@ -42,7 +53,7 @@ Contrasena: 12345678
 ## Estructura del proyecto
 
 ```text
-marketplace-hito3/
+marketplace-hito4/
   backend/
     package.json
     .env.example
@@ -73,6 +84,7 @@ marketplace-hito3/
     05-contrato-api.md
     06-hito-2-frontend.md
     07-hito-3-backend.md
+    08-hito-4-despliegue.md
   package.json
   README.md
 ```
@@ -98,12 +110,12 @@ supertest
 jest
 ```
 
-## Configurar PostgreSQL
+## Configurar PostgreSQL local
 
 En pgAdmin crea una base de datos llamada:
 
 ```text
-marketplace_hito3
+marketplace_hito4
 ```
 
 Luego abre Query Tool sobre esa base y ejecuta, en este orden:
@@ -117,8 +129,11 @@ Despues crea un archivo `backend/.env` usando `backend/.env.example` como refere
 
 ```env
 PORT=3000
-DATABASE_URL=postgres://postgres:TU_PASSWORD@localhost:5432/marketplace_hito3
-JWT_SECRET=mercado_vecino_hito3_desarrollo
+DATABASE_URL=postgres://postgres:TU_PASSWORD@localhost:5432/marketplace_hito4
+DATABASE_SSL=false
+DATABASE_SSL_REJECT_UNAUTHORIZED=false
+JWT_SECRET=mercado_vecino_hito4_desarrollo
+CORS_ORIGIN=http://localhost:5173
 ```
 
 Reemplaza `TU_PASSWORD` por tu clave real de PostgreSQL.
@@ -171,6 +186,31 @@ npm run backend:test
 ```
 
 Los tests usan Jest y Supertest. Cubren rutas publicas, rutas protegidas, escenarios correctos y errores HTTP.
+
+## Despliegue Hito 4
+
+La guia paso a paso esta en `docs/08-hito-4-despliegue.md`.
+
+Resumen de variables para produccion:
+
+Backend en Render:
+
+```env
+NODE_ENV=production
+DATABASE_URL=postgres://...
+DATABASE_SSL=false
+DATABASE_SSL_REJECT_UNAUTHORIZED=false
+JWT_SECRET=una_clave_larga_y_secreta
+CORS_ORIGIN=https://tu-sitio.netlify.app
+```
+
+Frontend en Netlify:
+
+```env
+VITE_API_URL=https://tu-api.onrender.com/api
+```
+
+Despues de desplegar la base de datos, ejecuta `database/schema.sql` y luego `database/seed.sql` en el servicio PostgreSQL productivo antes de probar login, registro y creacion de publicaciones.
 
 ## Endpoints principales
 
@@ -273,4 +313,4 @@ Desde el frontend complementario, el formulario de crear/editar publicacion envi
 
 ## Notas de entrega
 
-La carpeta esta preparada para abrirse en Visual Studio Code. Para la entrega del Hito 3, la evidencia principal esta en `backend/`, `database/`, `backend/tests/`, este `README.md` y `docs/07-hito-3-backend.md`.
+La carpeta esta preparada para abrirse en Visual Studio Code. Para la entrega del Hito 4, la evidencia principal esta en el link publico del frontend, mas `render.yaml`, `netlify.toml`, `database/`, este `README.md` y `docs/08-hito-4-despliegue.md`.

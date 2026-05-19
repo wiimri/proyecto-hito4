@@ -14,8 +14,20 @@ const { notFound, errorHandler } = require("./middlewares/error.middleware");
 
 function createApp() {
   const app = express();
+  const allowedOrigins = (process.env.CORS_ORIGIN || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 
-  app.use(cors());
+  app.use(cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origen no permitido por CORS"));
+    },
+  }));
   app.use(express.json({ limit: "2mb" }));
   app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 

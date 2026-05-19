@@ -1,7 +1,7 @@
 {
   "name": "mercado-vecino",
-  "version": "3.0.0",
-  "description": "Marketplace Mercado Vecino - Hito 3 Desarrollo Backend",
+  "version": "4.0.0",
+  "description": "Marketplace Mercado Vecino - Hito 4 Integracion y despliegue",
   "scripts": {
     "start": "npm run dev --prefix frontend",
     "frontend": "npm run dev --prefix frontend",
@@ -13,10 +13,11 @@
   },
   "keywords": [
     "marketplace",
-    "hito-3",
-    "backend",
-    "postgresql",
-    "prototipo"
+    "hito-4",
+    "deploy",
+    "render",
+    "netlify",
+    "postgresql"
   ],
   "author": "",
   "license": "MIT"

@@ -1,7 +1,7 @@
 {
   "name": "mercado-vecino-api",
-  "version": "3.0.0",
-  "description": "API REST con PostgreSQL, JWT, middlewares y tests para Marketplace Hito 3",
+  "version": "4.0.0",
+  "description": "API REST desplegable con PostgreSQL, JWT, middlewares y tests para Marketplace Hito 4",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
