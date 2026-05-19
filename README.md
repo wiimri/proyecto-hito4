@@ -1,8 +1,8 @@
 # Mercado Vecino - Hito 4 Integracion y despliegue
 
-Marketplace local desarrollado como entrega del Hito 4 de Desafio Latam. Esta version toma la base del Hito 3 y la prepara para produccion: frontend desplegable en Netlify, backend desplegable en Render, base de datos PostgreSQL cloud e integracion mediante variables de entorno.
+Marketplace local desarrollado como entrega del Hito 4 de Desafio Latam. Esta version toma la base del Hito 3 y la prepara para produccion usando Netlify como plataforma de despliegue elegida para la entrega. El proyecto mantiene frontend React, backend Express, base de datos PostgreSQL e integracion mediante variables de entorno.
 
-La entrega del hito corresponde al link publico de la aplicacion cliente. El frontend debe apuntar al backend productivo con `VITE_API_URL`, y el backend debe conectarse a la base de datos productiva con `DATABASE_URL`.
+La entrega del hito corresponde al link publico de la aplicacion cliente en Netlify. El frontend debe apuntar a la API configurada con `VITE_API_URL`, y el backend debe conectarse a PostgreSQL con `DATABASE_URL`.
 
 ## Tecnologias principales
 
@@ -17,16 +17,15 @@ La entrega del hito corresponde al link publico de la aplicacion cliente. El fro
 - Multer para subida de imagenes
 - Supertest y Jest para tests
 - React, Vite, React Router y AnimeJS como frontend de continuidad
-- Netlify para deploy del cliente
-- Render para deploy de backend y PostgreSQL
+- Netlify como plataforma elegida para el deploy de la entrega
 
 ## Checklist Hito 4
 
 | Criterio | Evidencia en el proyecto |
 |---|---|
 | Deploy aplicacion cliente | `netlify.toml`, build Vite y variable `VITE_API_URL`. |
-| Deploy aplicacion backend | `render.yaml`, `backend/package.json` y health check `/api/health`. |
-| Deploy base de datos | `database/schema.sql`, `database/seed.sql` y PostgreSQL declarado en `render.yaml`. |
+| Aplicacion backend | Codigo en `backend/`, script `npm start`, health check `/api/health` y variables en `backend/.env.example`. |
+| Base de datos | `database/schema.sql`, `database/seed.sql` y conexion PostgreSQL mediante `DATABASE_URL`. |
 | Integracion cliente-backend en produccion | `frontend/src/services/api.js`, CORS configurable con `CORS_ORIGIN` y variables de entorno documentadas. |
 
 ## Mejoras aplicadas desde el feedback del Hito 2
@@ -193,7 +192,7 @@ La guia paso a paso esta en `docs/08-hito-4-despliegue.md`.
 
 Resumen de variables para produccion:
 
-Backend en Render:
+Backend:
 
 ```env
 NODE_ENV=production
@@ -210,7 +209,7 @@ Frontend en Netlify:
 VITE_API_URL=https://tu-api.onrender.com/api
 ```
 
-Despues de desplegar la base de datos, ejecuta `database/schema.sql` y luego `database/seed.sql` en el servicio PostgreSQL productivo antes de probar login, registro y creacion de publicaciones.
+Despues de preparar la base de datos PostgreSQL, ejecuta `database/schema.sql` y luego `database/seed.sql` antes de probar login, registro y creacion de publicaciones.
 
 ## Endpoints principales
 
@@ -313,4 +312,4 @@ Desde el frontend complementario, el formulario de crear/editar publicacion envi
 
 ## Notas de entrega
 
-La carpeta esta preparada para abrirse en Visual Studio Code. Para la entrega del Hito 4, la evidencia principal esta en el link publico del frontend, mas `render.yaml`, `netlify.toml`, `database/`, este `README.md` y `docs/08-hito-4-despliegue.md`.
+La carpeta esta preparada para abrirse en Visual Studio Code. Para la entrega del Hito 4, la evidencia principal esta en el link publico del frontend en Netlify, mas `netlify.toml`, `database/`, este `README.md` y `docs/08-hito-4-despliegue.md`.
