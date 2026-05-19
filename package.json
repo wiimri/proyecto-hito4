@@ -15,10 +15,13 @@
     "marketplace",
     "hito-4",
     "deploy",
-    "render",
     "netlify",
+    "netlify-functions",
     "postgresql"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "serverless-http": "^4.0.0"
+  }
 }

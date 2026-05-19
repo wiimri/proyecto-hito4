@@ -4,7 +4,7 @@ Este documento deja el proyecto listo para cumplir la rubrica del Hito 4: client
 
 ## 1. Base de datos en produccion
 
-Opcion recomendada: crear una base PostgreSQL en Render junto al backend.
+Opcion recomendada: usar una base PostgreSQL cloud y guardar su `DATABASE_URL` en las variables de entorno de Netlify.
 
 1. Crear el servicio PostgreSQL.
 2. Guardar la `DATABASE_URL` que entrega la plataforma.
@@ -20,17 +20,16 @@ DATABASE_SSL=true
 DATABASE_SSL_REJECT_UNAUTHORIZED=false
 ```
 
-## 2. Backend en Render
+## 2. Backend en Netlify Functions
 
-El backend esta preparado con `render.yaml`.
+El backend esta preparado para ejecutarse como Netlify Function en `netlify/functions/api.js`. Netlify recibe las llamadas a `/api/*` y las redirige internamente a esa funcion.
 
 Configuracion manual equivalente:
 
 ```text
-Root Directory: backend
-Build Command: npm install
-Start Command: npm start
-Health Check Path: /api/health
+Build command: npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
+Publish directory: frontend/dist
+Functions directory: netlify/functions
 ```
 
 Variables de entorno:
@@ -47,9 +46,9 @@ CORS_ORIGIN=https://tu-sitio.netlify.app
 Pruebas despues del deploy:
 
 ```text
-https://tu-api.onrender.com/api/health
-https://tu-api.onrender.com/api/categories
-https://tu-api.onrender.com/api/posts
+https://tu-sitio.netlify.app/api/health
+https://tu-sitio.netlify.app/api/categories
+https://tu-sitio.netlify.app/api/posts
 ```
 
 ## 3. Frontend en Netlify
@@ -59,18 +58,17 @@ El frontend esta preparado con `netlify.toml` en la raiz del proyecto.
 Configuracion manual equivalente:
 
 ```text
-Base directory: frontend
-Build command: npm run build
-Publish directory: dist
+Build command: npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
+Publish directory: frontend/dist
 ```
 
 Variable de entorno:
 
 ```env
-VITE_API_URL=https://tu-api.onrender.com/api
+VITE_API_URL=/api
 ```
 
-El archivo `netlify.toml` incluye el redirect a `index.html`, necesario para que React Router funcione al recargar rutas internas como `/login`, `/perfil` o `/publicar`.
+La variable `VITE_API_URL` puede omitirse, porque en produccion el frontend usa `/api` automaticamente. El archivo `netlify.toml` incluye el redirect a `index.html`, necesario para que React Router funcione al recargar rutas internas como `/login`, `/perfil` o `/publicar`.
 
 ## 4. Prueba de integracion para la entrega
 
@@ -88,6 +86,6 @@ Antes de entregar el link del cliente, prueba estos flujos desde la URL de Netli
 | Requisito | Evidencia esperada |
 |---|---|
 | Deploy aplicacion cliente | URL publica de Netlify cargando sin errores de assets. |
-| Deploy aplicacion backend | URL publica de Render respondiendo `/api/health`. |
+| Deploy aplicacion backend | URL publica de Netlify respondiendo `/api/health` mediante Netlify Functions. |
 | Deploy base de datos | Tablas creadas con `schema.sql` y datos iniciales con `seed.sql`. |
 | Integracion cliente-backend | El frontend usa `VITE_API_URL`, el backend permite el origen de Netlify con `CORS_ORIGIN` y las acciones persisten en PostgreSQL. |
