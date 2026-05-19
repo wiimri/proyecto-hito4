@@ -11,10 +11,22 @@ const pool = new Pool({
 });
 
 async function query(text, params = []) {
+  if (!process.env.DATABASE_URL) {
+    const error = new Error("DATABASE_URL no configurada en Netlify");
+    error.status = 500;
+    throw error;
+  }
+
   return pool.query(text, params);
 }
 
 async function transaction(callback) {
+  if (!process.env.DATABASE_URL) {
+    const error = new Error("DATABASE_URL no configurada en Netlify");
+    error.status = 500;
+    throw error;
+  }
+
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
