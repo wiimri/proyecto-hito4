@@ -31,6 +31,23 @@ function createApp() {
   app.use(express.json({ limit: "2mb" }));
   app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
+  app.get("/", (request, response) => {
+    response.json({
+      status: "ok",
+      service: "mercado-vecino-api-hito4",
+      endpoints: [
+        "/health",
+        "/api/health",
+        "/categories",
+        "/api/categories",
+        "/productos",
+        "/api/productos",
+        "/posts",
+        "/api/posts",
+      ],
+    });
+  });
+
   const routes = [
     ["/health", healthRoutes],
     ["/auth", authRoutes],
@@ -48,8 +65,11 @@ function createApp() {
 
   app.use("/salud", healthRoutes);
   app.use("/categorias", categoryRoutes);
+  app.use("/api/categorias", categoryRoutes);
   app.use("/publicaciones", postRoutes);
+  app.use("/api/publicaciones", postRoutes);
   app.use("/productos", postRoutes);
+  app.use("/api/productos", postRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

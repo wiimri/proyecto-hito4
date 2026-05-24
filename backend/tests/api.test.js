@@ -30,6 +30,13 @@ describe("Mercado Vecino API Hito 4", () => {
     expect(response.body.status).toBe("ok");
   });
 
+  test("GET / responde 200 y lista rutas disponibles", async () => {
+    const response = await request(app).get("/");
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.endpoints).toContain("/api/productos");
+  });
+
   test("GET /api/categories responde 200 y devuelve categorias desde Neon PostgreSQL", async () => {
     db.query.mockResolvedValueOnce({
       rows: [{ id: "1", name: "Tecnologia", description: "Notebooks y accesorios" }],
@@ -78,6 +85,15 @@ describe("Mercado Vecino API Hito 4", () => {
 
     expect(response.statusCode).toBe(404);
     expect(response.body.message).toBe("Publicacion no encontrada");
+  });
+
+  test("GET /api/productos responde 200 como alias de publicaciones", async () => {
+    db.query.mockResolvedValueOnce({ rows: [] });
+
+    const response = await request(app).get("/api/productos");
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data).toHaveLength(0);
   });
 
   test("POST /api/posts responde 201 con token valido y archivo de imagen", async () => {
