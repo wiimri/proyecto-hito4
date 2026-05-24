@@ -5,9 +5,9 @@ Coloca aqui tus imagenes para usarlas en publicaciones.
 Ejemplo:
 
 ```text
-frontend/assets/notebook.jpg
-frontend/assets/bicicleta.png
-frontend/assets/silla.webp
+client/assets/notebook.jpg
+client/assets/bicicleta.png
+client/assets/silla.webp
 ```
 
 Luego, en el formulario de crear publicacion, escribe la ruta:

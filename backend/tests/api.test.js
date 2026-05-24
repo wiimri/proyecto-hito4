@@ -23,7 +23,7 @@ describe("Mercado Vecino API Hito 4", () => {
     expect(response.body.status).toBe("ok");
   });
 
-  test("GET /api/categories responde 200 y devuelve categorias desde pg", async () => {
+  test("GET /api/categories responde 200 y devuelve categorias desde Neon PostgreSQL", async () => {
     db.query.mockResolvedValueOnce({
       rows: [{ id: "1", name: "Tecnologia", description: "Notebooks y accesorios" }],
     });

@@ -1,6 +1,6 @@
-# 06 - Hito 2 Desarrollo Frontend
+# 06 - Hito 2 Desarrollo client
 
-El frontend fue migrado a una aplicacion React con Vite ubicada en `frontend/`.
+El client fue migrado a una aplicacion React con Vite ubicada en `client/`.
 
 ## Requerimientos de la rubrica
 
@@ -9,9 +9,9 @@ El frontend fue migrado a una aplicacion React con Vite ubicada en `frontend/`.
 Proyecto React/Vite:
 
 ```text
-frontend/package.json
-frontend/src/main.jsx
-frontend/src/App.jsx
+client/package.json
+client/src/main.jsx
+client/src/App.jsx
 ```
 
 Dependencias instaladas:
@@ -29,7 +29,7 @@ animejs
 Comandos:
 
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev
 ```
@@ -39,8 +39,8 @@ npm run dev
 El enrutador se declara en:
 
 ```text
-frontend/src/main.jsx
-frontend/src/App.jsx
+client/src/main.jsx
+client/src/App.jsx
 ```
 
 Rutas publicas:
@@ -118,7 +118,7 @@ Las animaciones respetan `prefers-reduced-motion` para evitar movimiento cuando 
 Contexto:
 
 ```text
-frontend/src/context/MarketplaceContext.jsx
+client/src/context/MarketplaceContext.jsx
 ```
 
 Estado global manejado:
@@ -143,7 +143,7 @@ useMarketplace()
 El servicio base para consumir la API del proyecto esta en:
 
 ```text
-frontend/src/services/api.js
+client/src/services/api.js
 ```
 
 Lee `VITE_API_URL` o usa por defecto:
@@ -151,3 +151,4 @@ Lee `VITE_API_URL` o usa por defecto:
 ```text
 http://localhost:3000/api
 ```
+

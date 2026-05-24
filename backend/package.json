@@ -1,7 +1,7 @@
 {
   "name": "mercado-vecino-api",
   "version": "4.0.0",
-  "description": "API REST desplegable con PostgreSQL, JWT, middlewares y tests para Marketplace Hito 4",
+  "description": "API REST desplegable en Render con Neon PostgreSQL, JWT, middlewares y tests para Marketplace Hito 4",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -10,14 +10,14 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.1.1",
-    "pg": "^8.13.1"
+    "multer": "^2.1.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",

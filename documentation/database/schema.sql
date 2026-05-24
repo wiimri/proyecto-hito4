@@ -69,3 +69,4 @@ CREATE INDEX idx_posts_status ON posts(status);
 CREATE INDEX idx_post_images_post_id ON post_images(post_id);
 CREATE INDEX idx_favorites_user_id ON favorites(user_id);
 CREATE INDEX idx_messages_receiver_id ON messages(receiver_id);
+

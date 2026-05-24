@@ -3,10 +3,10 @@
   "version": "4.0.0",
   "description": "Marketplace Mercado Vecino - Hito 4 Integracion y despliegue",
   "scripts": {
-    "start": "npm run dev --prefix frontend",
-    "frontend": "npm run dev --prefix frontend",
-    "frontend:build": "npm run build --prefix frontend",
-    "frontend:preview": "npm run preview --prefix frontend",
+    "start": "npm run dev --prefix client",
+    "client": "npm run dev --prefix client",
+    "client:build": "npm run build --prefix client",
+    "client:preview": "npm run preview --prefix client",
     "backend": "cd backend && npm start",
     "backend:dev": "cd backend && npm run dev",
     "backend:test": "npm test --prefix backend"
@@ -15,13 +15,10 @@
     "marketplace",
     "hito-4",
     "deploy",
-    "netlify",
-    "netlify-functions",
+    "render",
+    "neon",
     "postgresql"
   ],
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "serverless-http": "^4.0.0"
-  }
+  "license": "MIT"
 }

@@ -19,7 +19,7 @@ Requieren usuario guardado en `localStorage`:
 - Mi perfil: `#profile`
 - Crear publicacion: `#create`
 
-## Regla de sesion en frontend
+## Regla de sesion en client
 
 Cuando el usuario inicia sesion o se registra, el prototipo guarda:
 
@@ -33,7 +33,7 @@ Cuando el usuario inicia sesion o se registra, el prototipo guarda:
 
 La informacion queda en `localStorage` con la clave `mercadoVecinoUser`.
 
-Si una persona intenta entrar a una vista privada sin sesion, el frontend muestra una pantalla de bloqueo y ofrece ir a inicio de sesion.
+Si una persona intenta entrar a una vista privada sin sesion, el client muestra una pantalla de bloqueo y ofrece ir a inicio de sesion.
 
 ## Flujo de navegacion
 
@@ -50,3 +50,4 @@ flowchart TD
   H --> B
   E --> B
 ```
+

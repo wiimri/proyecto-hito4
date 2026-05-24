@@ -1,33 +1,44 @@
-const { Pool } = require("pg");
+const { neon, Pool } = require("@neondatabase/serverless");
 
-const sslEnabled = process.env.DATABASE_SSL === "true";
+let pool;
+let sql;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: sslEnabled
-    ? { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED === "true" }
-    : undefined,
-  allowExitOnIdle: true,
-});
-
-async function query(text, params = []) {
+function ensureDatabaseUrl() {
   if (!process.env.DATABASE_URL) {
-    const error = new Error("DATABASE_URL no configurada en Netlify");
+    const error = new Error("DATABASE_URL no configurada en Render");
     error.status = 500;
     throw error;
   }
+}
 
-  return pool.query(text, params);
+function getPool() {
+  ensureDatabaseUrl();
+
+  if (!pool) {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+    });
+  }
+
+  return pool;
+}
+
+function getSql() {
+  ensureDatabaseUrl();
+
+  if (!sql) {
+    sql = neon(process.env.DATABASE_URL);
+  }
+
+  return sql;
+}
+
+async function query(text, params = []) {
+  return getPool().query(text, params);
 }
 
 async function transaction(callback) {
-  if (!process.env.DATABASE_URL) {
-    const error = new Error("DATABASE_URL no configurada en Netlify");
-    error.status = 500;
-    throw error;
-  }
-
-  const client = await pool.connect();
+  const client = await getPool().connect();
   try {
     await client.query("BEGIN");
     const result = await callback(client);
@@ -41,8 +52,15 @@ async function transaction(callback) {
   }
 }
 
+async function getDatabaseVersion() {
+  const result = await getSql()`SELECT version()`;
+  return result[0].version;
+}
+
 module.exports = {
-  pool,
+  getPool,
+  getSql,
+  getDatabaseVersion,
   query,
   transaction,
 };

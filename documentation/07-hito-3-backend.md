@@ -37,7 +37,7 @@ backend/src/
 
 ## Conexion con PostgreSQL
 
-El archivo `backend/src/db.js` centraliza la conexion a PostgreSQL usando el paquete `pg`.
+El archivo `backend/src/db.js` centraliza la conexion a PostgreSQL usando `@neondatabase/serverless`.
 
 - `Pool` administra conexiones.
 - `query(text, params)` ejecuta consultas parametrizadas.
@@ -74,25 +74,25 @@ Todos trabajan con `next()` para mantener el flujo de Express.
 | Favorites | `GET /api/favorites`, `POST /api/favorites`, `DELETE /api/favorites/:postId` |
 | Messages | `GET /api/messages`, `POST /api/messages` |
 
-## Continuidad con el frontend
+## Continuidad con el client
 
-Aunque el Hito 3 se evalua como backend, el frontend de continuidad queda preparado para consumir la API:
+Aunque el Hito 3 se evalua como backend, el client de continuidad queda preparado para consumir la API:
 
-- `frontend/src/services/api.js` centraliza llamadas HTTP.
+- `client/src/services/api.js` centraliza llamadas HTTP.
 - `MarketplaceContext.jsx` carga categorias y publicaciones desde PostgreSQL a traves de la API.
 - Login y registro consumen `/api/auth/login` y `/api/auth/register`.
 - Crear y editar publicaciones envia `multipart/form-data` con archivos reales.
-- La ruta `*` del frontend renderiza `NotFound`, cubriendo rutas inexistentes.
+- La ruta `*` del client renderiza `NotFound`, cubriendo rutas inexistentes.
 
-Si el backend no esta disponible, el frontend conserva fallback local para mantener la navegacion del prototipo.
+Si el backend no esta disponible, el client conserva fallback local para mantener la navegacion del prototipo.
 
 ## Base de datos
 
 Los scripts SQL estan en:
 
 ```text
-database/schema.sql
-database/seed.sql
+documentation/database/schema.sql
+documentation/database/seed.sql
 ```
 
 Tablas principales:
@@ -134,7 +134,7 @@ La tabla `post_images` no guarda el binario de la imagen, sino la ruta publica d
 El archivo `backend/tests/api.test.js` valida escenarios de API:
 
 - Health responde 200.
-- Categorias responde 200 usando consultas `pg`.
+- Categorias responde 200 usando consultas a Neon PostgreSQL.
 - Login invalido responde 401.
 - Perfil sin token responde 401.
 - Publicacion inexistente responde 404.
@@ -151,9 +151,10 @@ npm run backend:test
 | Criterio | Implementacion |
 |---|---|
 | Nuevo proyecto npm con dependencias | `package.json` raiz y `backend/package.json`. |
-| Uso de pg | `backend/src/db.js`. |
+| Uso de Neon PostgreSQL | `backend/src/db.js`. |
 | JWT | `auth.routes.js`, `token.js`, `auth.middleware.js`. |
 | CORS | `app.js`. |
 | Middlewares | `middlewares/` con validacion, autenticacion y errores. |
 | Supertest | `backend/tests/api.test.js`. |
-| Integracion con frontend de continuidad | `frontend/src/services/api.js` y `MarketplaceContext.jsx` consumen la API real. |
+| Integracion con client de continuidad | `client/src/services/api.js` y `MarketplaceContext.jsx` consumen la API real. |
+

@@ -148,3 +148,4 @@ Componentes:
 - Datos de vendedor.
 - Accion de contacto.
 - Boton para volver a galeria.
+

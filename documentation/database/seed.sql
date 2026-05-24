@@ -29,3 +29,4 @@ INSERT INTO favorites (user_id, post_id) VALUES
 INSERT INTO messages (post_id, sender_id, receiver_id, body) VALUES
 (1, 2, 1, 'Hola, sigue disponible la bicicleta?'),
 (2, 3, 1, 'Hola, aceptas transferencia?');
+

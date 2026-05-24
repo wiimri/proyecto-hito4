@@ -17,14 +17,14 @@ function errorHandler(error, request, response, next) {
 
   if (error.code === "42P01") {
     return response.status(500).json({
-      message: "La base de datos no tiene las tablas creadas. Ejecuta database/schema.sql y luego database/seed.sql.",
+      message: "La base de datos no tiene las tablas creadas. Ejecuta documentation/database/schema.sql y luego documentation/database/seed.sql.",
       errors: [],
     });
   }
 
   if (["ECONNREFUSED", "ENOTFOUND", "ETIMEDOUT"].includes(error.code)) {
     return response.status(500).json({
-      message: "No se pudo conectar a PostgreSQL. Revisa DATABASE_URL en las variables de entorno de Netlify.",
+      message: "No se pudo conectar a PostgreSQL. Revisa DATABASE_URL en las variables de entorno de Render.",
       errors: [],
     });
   }

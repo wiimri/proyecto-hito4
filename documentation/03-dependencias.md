@@ -1,13 +1,13 @@
 # 03 - Dependencias a utilizar
 
-## Frontend
+## client
 
 | Dependencia | Uso |
 | --- | --- |
 | React | Construccion de interfaz por componentes. |
 | Vite | Servidor de desarrollo y empaquetado rapido. |
 | React Router DOM | Navegacion entre vistas publicas y privadas. |
-| Axios | Consumo de API REST desde el frontend. |
+| Axios | Consumo de API REST desde el client. |
 | Bootstrap o Tailwind CSS | Framework CSS para acelerar layout responsivo. |
 | React Hook Form | Manejo y validacion de formularios. |
 | SweetAlert2 | Alertas de exito, error y confirmacion. |
@@ -18,8 +18,8 @@
 | --- | --- |
 | Node.js | Entorno de ejecucion JavaScript. |
 | Express | Creacion de API REST. |
-| pg | Conexion con PostgreSQL. |
-| cors | Permitir consumo desde frontend. |
+| @neondatabase/serverless | Conexion serverless con Neon PostgreSQL. |
+| cors | Permitir consumo desde client. |
 | dotenv | Manejo de variables de entorno. |
 | bcryptjs | Encriptacion de contrasenas. |
 | jsonwebtoken | Autenticacion con JWT. |
@@ -36,4 +36,5 @@
 
 ## Dependencias usadas por este prototipo entregable
 
-El frontend incluido en `frontend/` esta hecho con HTML, CSS y JavaScript puro para que pueda abrirse sin instalacion. El backend en `backend/` deja preparada la estructura Express y sus dependencias en `package.json`.
+El client incluido en `client/` esta hecho con HTML, CSS y JavaScript puro para que pueda abrirse sin instalacion. El backend en `backend/` deja preparada la estructura Express y sus dependencias en `package.json`.
+
