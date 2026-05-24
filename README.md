@@ -16,7 +16,7 @@ marketplace-hito4/
 
 - Node.js y npm
 - Express
-- Neon PostgreSQL con `@neondatabase/serverless`
+- Neon PostgreSQL con `pg` para la API y `@neondatabase/serverless` para diagnostico de conexion
 - JWT con `jsonwebtoken`
 - bcryptjs
 - CORS

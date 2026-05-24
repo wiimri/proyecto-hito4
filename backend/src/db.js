@@ -1,4 +1,5 @@
-const { neon, Pool } = require("@neondatabase/serverless");
+const { neon } = require("@neondatabase/serverless");
+const { Pool } = require("pg");
 
 let pool;
 let sql;
@@ -17,6 +18,10 @@ function getPool() {
   if (!pool) {
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
+      ssl: process.env.DATABASE_URL.includes("sslmode=require")
+        ? { rejectUnauthorized: false }
+        : undefined,
+      allowExitOnIdle: true,
     });
   }
 
