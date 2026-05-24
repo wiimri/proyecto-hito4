@@ -31,13 +31,20 @@ function createApp() {
   app.use(express.json({ limit: "2mb" }));
   app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
-  app.use("/api/health", healthRoutes);
-  app.use("/api/auth", authRoutes);
-  app.use("/api/categories", categoryRoutes);
-  app.use("/api/users", userRoutes);
-  app.use("/api/posts", postRoutes);
-  app.use("/api/favorites", favoriteRoutes);
-  app.use("/api/messages", messageRoutes);
+  const routes = [
+    ["/health", healthRoutes],
+    ["/auth", authRoutes],
+    ["/categories", categoryRoutes],
+    ["/users", userRoutes],
+    ["/posts", postRoutes],
+    ["/favorites", favoriteRoutes],
+    ["/messages", messageRoutes],
+  ];
+
+  for (const [routePath, router] of routes) {
+    app.use(`/api${routePath}`, router);
+    app.use(routePath, router);
+  }
 
   app.use(notFound);
   app.use(errorHandler);
