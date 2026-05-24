@@ -41,7 +41,7 @@ CORS_ORIGIN=https://tu-cliente-render.onrender.com
 Cliente (`client/.env` en local o Environment Variables en Render Static Site):
 
 ```env
-VITE_API_URL=https://tu-backend-render.onrender.com/api
+VITE_BACKEND_URL=https://tu-backend-render.onrender.com
 ```
 
 No se suben credenciales reales al repositorio. Usa `.env.example` como plantilla.
@@ -141,7 +141,7 @@ Publish Directory: dist
 Variable:
 
 ```env
-VITE_API_URL=https://tu-backend-render.onrender.com/api
+VITE_BACKEND_URL=https://tu-backend-render.onrender.com
 ```
 
 Cuando Render entregue la URL del cliente, vuelve al backend y actualiza `CORS_ORIGIN` con esa URL.

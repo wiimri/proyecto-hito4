@@ -59,7 +59,7 @@ Publish Directory: dist
 Variable:
 
 ```env
-VITE_API_URL=https://tu-backend-render.onrender.com/api
+VITE_BACKEND_URL=https://tu-backend-render.onrender.com
 ```
 
 Cuando Render entregue la URL del cliente, copiarla en `CORS_ORIGIN` del backend y redeployar el Web Service.

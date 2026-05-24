@@ -6,6 +6,7 @@ client/node_modules/
 # Environment variables
 .env
 backend/.env
+client/.env
 
 # Logs
 npm-debug.log*
