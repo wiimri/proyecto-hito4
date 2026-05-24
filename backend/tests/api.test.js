@@ -23,6 +23,13 @@ describe("Mercado Vecino API Hito 4", () => {
     expect(response.body.status).toBe("ok");
   });
 
+  test("GET /health responde 200 sin prefijo api", async () => {
+    const response = await request(app).get("/health");
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.status).toBe("ok");
+  });
+
   test("GET /api/categories responde 200 y devuelve categorias desde Neon PostgreSQL", async () => {
     db.query.mockResolvedValueOnce({
       rows: [{ id: "1", name: "Tecnologia", description: "Notebooks y accesorios" }],
@@ -33,6 +40,17 @@ describe("Mercado Vecino API Hito 4", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveLength(1);
     expect(db.query).toHaveBeenCalledWith(expect.stringContaining("SELECT id, name, description FROM categories"));
+  });
+
+  test("GET /categorias responde 200 como alias publico", async () => {
+    db.query.mockResolvedValueOnce({
+      rows: [{ id: "1", name: "Tecnologia", description: "Notebooks y accesorios" }],
+    });
+
+    const response = await request(app).get("/categorias");
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveLength(1);
   });
 
   test("POST /api/auth/login responde 401 con credenciales invalidas", async () => {

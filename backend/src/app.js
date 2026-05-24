@@ -46,6 +46,11 @@ function createApp() {
     app.use(routePath, router);
   }
 
+  app.use("/salud", healthRoutes);
+  app.use("/categorias", categoryRoutes);
+  app.use("/publicaciones", postRoutes);
+  app.use("/productos", postRoutes);
+
   app.use(notFound);
   app.use(errorHandler);
 
