@@ -36,6 +36,20 @@ function errorHandler(error, request, response, next) {
     });
   }
 
+  if (error.message && error.message.toLowerCase().includes("password authentication failed")) {
+    return response.status(500).json({
+      message: "Neon rechazo las credenciales. Copia nuevamente la DATABASE_URL desde el dashboard de Neon.",
+      errors: [],
+    });
+  }
+
+  if (error.message && error.message.toLowerCase().includes("endpoint is disabled")) {
+    return response.status(500).json({
+      message: "El endpoint de Neon esta deshabilitado o suspendido. Activalo en el dashboard de Neon.",
+      errors: [],
+    });
+  }
+
   response.status(error.status || 500).json({
     message: error.message || "Error interno del servidor",
     errors: error.errors || [],
