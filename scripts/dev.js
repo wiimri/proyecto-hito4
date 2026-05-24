@@ -1,25 +1,26 @@
 const { spawn } = require("child_process");
+const path = require("path");
 
 const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
 
 const processes = [
   {
     name: "backend",
-    command: npmCommand,
-    args: ["run", "dev", "--prefix", "backend"],
+    command: `${npmCommand} run dev`,
+    cwd: path.join(process.cwd(), "backend"),
   },
   {
     name: "client",
-    command: npmCommand,
-    args: ["run", "dev", "--prefix", "client"],
+    command: `${npmCommand} run dev`,
+    cwd: path.join(process.cwd(), "client"),
   },
 ];
 
-const children = processes.map(({ name, command, args }) => {
-  const child = spawn(command, args, {
-    cwd: process.cwd(),
+const children = processes.map(({ name, command, cwd }) => {
+  const child = spawn(command, {
+    cwd,
     stdio: "inherit",
-    shell: false,
+    shell: true,
   });
 
   child.on("exit", (code) => {
