@@ -81,7 +81,7 @@ npm run backend:dev
 Cliente:
 
 ```bash
-npm start
+npm run client
 ```
 
 URLs locales:
@@ -90,6 +90,14 @@ URLs locales:
 Backend: http://localhost:3000/api/health
 Cliente: http://localhost:5173
 ```
+
+Tambien puedes levantar ambos servicios desde la raiz:
+
+```bash
+npm start
+```
+
+Ese comando arranca el backend en `http://localhost:3000` y el cliente en `http://localhost:5173`. Si levantas solo el cliente, login y registro mostraran `Failed to fetch` porque la API no estara escuchando en el puerto 3000.
 
 ## Deploy en Render
 

@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "Marketplace Mercado Vecino - Hito 4 Integracion y despliegue",
   "scripts": {
-    "start": "npm run dev --prefix client",
+    "start": "node scripts/dev.js",
     "client": "npm run dev --prefix client",
     "client:build": "npm run build --prefix client",
     "client:preview": "npm run preview --prefix client",
