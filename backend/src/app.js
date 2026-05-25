@@ -25,6 +25,7 @@ function createApp() {
   // =========================
 
   const productionOrigins = [
+    "https://proyecto-hito4-frontend.onrender.com",
     "https://proyecto-hito4-front-3.onrender.com",
   ];
 
