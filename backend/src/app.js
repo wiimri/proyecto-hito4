@@ -12,17 +12,10 @@ const postRoutes = require("./routes/post.routes");
 const favoriteRoutes = require("./routes/favorite.routes");
 const messageRoutes = require("./routes/message.routes");
 
-const {
-  notFound,
-  errorHandler,
-} = require("./middlewares/error.middleware");
+const { notFound, errorHandler } = require("./middlewares/error.middleware");
 
 function createApp() {
   const app = express();
-
-  // =========================
-  // CORS CONFIG
-  // =========================
 
   const productionOrigins = [
     "https://proyecto-hito4-frontend.onrender.com",
@@ -36,76 +29,39 @@ function createApp() {
 
   const configuredOrigins = (process.env.CORS_ORIGIN || "")
     .split(",")
-    .map((origin) => origin.trim())
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
     .filter(Boolean);
 
   const allowedOrigins = [
-    ...new Set([
-      ...productionOrigins,
-      ...localOrigins,
-      ...configuredOrigins,
-    ]),
+    ...new Set([...productionOrigins, ...localOrigins, ...configuredOrigins]),
   ];
 
   const corsOptions = {
     origin(origin, callback) {
-      // Permite Postman, Thunder Client o requests sin origin
-      if (!origin) {
+      if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      console.error(`❌ CORS bloqueado para origen: ${origin}`);
-
-      return callback(
-        new Error(`CORS bloqueado para origen: ${origin}`)
-      );
+      console.warn(`CORS no permitido para origen: ${origin}`);
+      return callback(null, false);
     },
-
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS",
-    ],
-
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-    ],
-
-    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: false,
+    optionsSuccessStatus: 204,
   };
 
   app.use(cors(corsOptions));
-
-  // Manejo preflight OPTIONS
   app.options("*", cors(corsOptions));
 
-  // =========================
-  // MIDDLEWARES
-  // =========================
-
   app.use(express.json({ limit: "2mb" }));
-
-  app.use(
-    "/uploads",
-    express.static(path.join(__dirname, "..", "uploads"))
-  );
-
-  // =========================
-  // ROOT
-  // =========================
+  app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
   app.get("/", (request, response) => {
     response.json({
       status: "ok",
       service: "mercado-vecino-api-hito4",
+      corsOrigins: allowedOrigins,
       endpoints: [
         "/health",
         "/api/health",
@@ -118,10 +74,6 @@ function createApp() {
       ],
     });
   });
-
-  // =========================
-  // ROUTES
-  // =========================
 
   const routes = [
     ["/health", healthRoutes],
@@ -138,24 +90,13 @@ function createApp() {
     app.use(routePath, router);
   }
 
-  // =========================
-  // ALIAS EN ESPAÑOL
-  // =========================
-
   app.use("/salud", healthRoutes);
-
   app.use("/categorias", categoryRoutes);
   app.use("/api/categorias", categoryRoutes);
-
   app.use("/publicaciones", postRoutes);
   app.use("/api/publicaciones", postRoutes);
-
   app.use("/productos", postRoutes);
   app.use("/api/productos", postRoutes);
-
-  // =========================
-  // ERROR HANDLERS
-  // =========================
 
   app.use(notFound);
   app.use(errorHandler);
