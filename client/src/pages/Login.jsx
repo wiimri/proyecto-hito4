@@ -7,8 +7,8 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, isAuthenticated } = useMarketplace();
-  const [email, setEmail] = useState("demo@mercadovecino.cl");
-  const [password, setPassword] = useState("12345678");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const introRef = usePageIntro("login");
@@ -53,7 +53,7 @@ export default function Login() {
           <input required type="password" minLength="8" value={password} onChange={(event) => setPassword(event.target.value)} />
           <span className="field-hint">Usa al menos 8 caracteres.</span>
         </label>
-        <button className="button primary" type="submit" disabled={isSubmitting}>{isSubmitting ? "Ingresando..." : "Ingresar demo"}</button>
+        <button className="button primary" type="submit" disabled={isSubmitting}>{isSubmitting ? "Ingresando..." : "Ingresar"}</button>
         <Link to="/register">Crear cuenta nueva</Link>
       </form>
     </section>
