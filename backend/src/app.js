@@ -14,18 +14,26 @@ const { notFound, errorHandler } = require("./middlewares/error.middleware");
 
 function createApp() {
   const app = express();
-  const allowedOrigins = (process.env.CORS_ORIGIN || "")
+  const productionOrigins = [
+    "https://proyecto-hito4-front-3.onrender.com",
+  ];
+  const localOrigins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+  ];
+  const configuredOrigins = (process.env.CORS_ORIGIN || "")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
+  const allowedOrigins = [...new Set([...productionOrigins, ...localOrigins, ...configuredOrigins])];
 
   app.use(cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      return callback(new Error("Origen no permitido por CORS"));
+      return callback(null, false);
     },
   }));
   app.use(express.json({ limit: "2mb" }));
