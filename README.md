@@ -2,6 +2,16 @@
 
 Marketplace desarrollado para el Hito 4 de Desafio Latam. Esta version esta organizada para desplegar el backend y el cliente en Render, usando Neon como PostgreSQL online.
 
+## URLs de produccion
+
+```text
+Cliente Render: https://proyecto-hito4-frontend.onrender.com
+Backend Render: https://proyecto-hito4-backend-2.onrender.com
+Base de datos: Neon PostgreSQL
+```
+
+La aplicacion cliente consume la API online del backend y el backend persiste los datos en Neon.
+
 ## Estructura
 
 ```text
@@ -35,32 +45,28 @@ PORT=3000
 NODE_ENV=production
 DATABASE_URL=postgresql://USUARIO:PASSWORD@HOST/neondb?sslmode=require&channel_binding=require
 JWT_SECRET=una_clave_larga_y_segura
-CORS_ORIGIN=https://tu-cliente-render.onrender.com
+CORS_ORIGIN=https://proyecto-hito4-frontend.onrender.com
 ```
 
 Cliente (`client/.env` en local o Environment Variables en Render Static Site):
 
 ```env
-VITE_BACKEND_URL=https://tu-backend-render.onrender.com
+VITE_BACKEND_URL=https://proyecto-hito4-backend-2.onrender.com
 ```
 
 No se suben credenciales reales al repositorio. Usa `.env.example` como plantilla.
 
 ## Base de datos Neon
 
-En la consola SQL de Neon ejecuta, en este orden:
+En la consola SQL de Neon ejecuta el schema principal:
 
 ```text
 documentation/database/schema.sql
-documentation/database/seed.sql
 ```
 
-El seed crea una cuenta demo:
+El archivo `seed.sql` es opcional. Puede usarse si se quieren datos de prueba, pero para la entrega el flujo principal es crear usuarios desde la pagina `Registrarse`.
 
-```text
-Email: demo@mercadovecino.cl
-Contrasena: 12345678
-```
+El formulario de inicio de sesion no trae un usuario precargado. Cada evaluador puede crear una cuenta nueva y luego ingresar con sus propias credenciales.
 
 ## Ejecutar en local
 
@@ -117,15 +123,17 @@ Variables:
 NODE_ENV=production
 DATABASE_URL=postgresql://...
 JWT_SECRET=una_clave_larga_y_segura
-CORS_ORIGIN=https://tu-cliente-render.onrender.com
+CORS_ORIGIN=https://proyecto-hito4-frontend.onrender.com
 ```
 
 Pruebas:
 
 ```text
-https://tu-backend-render.onrender.com/api/health
-https://tu-backend-render.onrender.com/api/health/db
-https://tu-backend-render.onrender.com/api/categories
+https://proyecto-hito4-backend-2.onrender.com/
+https://proyecto-hito4-backend-2.onrender.com/api/health
+https://proyecto-hito4-backend-2.onrender.com/api/health/db
+https://proyecto-hito4-backend-2.onrender.com/api/categories
+https://proyecto-hito4-backend-2.onrender.com/api/posts
 ```
 
 ### Cliente
@@ -141,10 +149,14 @@ Publish Directory: dist
 Variable:
 
 ```env
-VITE_BACKEND_URL=https://tu-backend-render.onrender.com
+VITE_BACKEND_URL=https://proyecto-hito4-backend-2.onrender.com
 ```
 
-Cuando Render entregue la URL del cliente, vuelve al backend y actualiza `CORS_ORIGIN` con esa URL.
+La URL del cliente usada por CORS es:
+
+```env
+CORS_ORIGIN=https://proyecto-hito4-frontend.onrender.com
+```
 
 ## Endpoints principales
 
@@ -168,6 +180,19 @@ Cuando Render entregue la URL del cliente, vuelve al backend y actualiza `CORS_O
 | GET | `/api/messages` | Si | Mensajes recibidos |
 | POST | `/api/messages` | Si | Enviar mensaje |
 
+Aliases disponibles para pruebas en navegador:
+
+```text
+/
+/health
+/categories
+/posts
+/productos
+/api/productos
+/categorias
+/publicaciones
+```
+
 ## Validacion
 
 ```bash
@@ -181,5 +206,5 @@ npm run client:build
 |---|---|
 | Deploy aplicacion cliente | Static Site de Render desde `client/`. |
 | Deploy aplicacion backend | Web Service de Render desde `backend/`. |
-| Deploy base de datos | Neon PostgreSQL con `schema.sql` y `seed.sql`. |
-| Integracion cliente-backend | `VITE_API_URL`, `CORS_ORIGIN`, JWT y persistencia en Neon. |
+| Deploy base de datos | Neon PostgreSQL con `schema.sql`; `seed.sql` queda como carga opcional de datos de prueba. |
+| Integracion cliente-backend | `VITE_BACKEND_URL`, `CORS_ORIGIN`, JWT y persistencia en Neon. |
