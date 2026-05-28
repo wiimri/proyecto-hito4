@@ -80,7 +80,11 @@ export function MarketplaceProvider({ children }) {
           api.getPosts(),
         ]);
         if (!active) return;
-        setCategories(apiCategories);
+        const backendCategories = Array.isArray(apiCategories) && apiCategories.length > 0
+          ? apiCategories
+          : seedCategories;
+
+        setCategories(backendCategories);
         setPosts(normalizePosts(apiPosts.data || apiPosts));
       } catch (error) {
         console.warn("No se pudo cargar API, se mantiene fallback local", error);

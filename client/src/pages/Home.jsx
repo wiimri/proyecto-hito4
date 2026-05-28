@@ -7,7 +7,12 @@ import { useHeroMotion, usePageIntro } from "../hooks/useAnime.js";
 
 export default function Home() {
   const { categories, posts } = useMarketplace();
-  const featured = posts[0];
+  const featured = posts[0] || {
+    title: "Bicicleta urbana aro 29",
+    category: "Deportes",
+    imageUrl: "/assets/bicicleta-urbana.svg",
+    images: ["/assets/bicicleta-urbana.svg"],
+  };
   const introRef = usePageIntro("home");
   const heroMotionRef = useHeroMotion();
 
